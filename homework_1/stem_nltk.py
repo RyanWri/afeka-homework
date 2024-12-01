@@ -2,7 +2,7 @@ from nltk.stem import PorterStemmer, LancasterStemmer
 import nltk
 
 # Ensure required NLTK data is downloaded
-nltk.download('punkt')
+nltk.download("punkt")
 
 
 def stem_nltk(messages, method="porter"):
