@@ -88,11 +88,11 @@ def compare_tokenizations(nltk_tokens, spacy_tokens):
     common_tokens = set(nltk_counter.keys()).intersection(set(spacy_counter.keys()))
 
     return {
-        'NLTK unique tokens count': len(nltk_unique),
-        'spaCy unique tokens count': len(spacy_unique),
-        'Common tokens count': len(common_tokens),
-        'Total NLTK tokens': len(nltk_tokens),
-        'Total spaCy tokens': len(spacy_tokens)
+        "NLTK unique tokens count": len(nltk_unique),
+        "spaCy unique tokens count": len(spacy_unique),
+        "Common tokens count": len(common_tokens),
+        "Total NLTK tokens": len(nltk_tokens),
+        "Total spaCy tokens": len(spacy_tokens),
     }
 
 
@@ -113,11 +113,11 @@ def compare_lemmatizations(nltk_lemmas, spacy_lemmas):
     common_lemmas = set(nltk_counter.keys()).intersection(set(spacy_counter.keys()))
 
     return {
-        'NLTK unique lemmas count': len(nltk_unique),
-        'spaCy unique lemmas count': len(spacy_unique),
-        'Common lemmas count': len(common_lemmas),
-        'Total NLTK lemmas': len(nltk_lemmas),
-        'Total spaCy lemmas': len(spacy_lemmas)
+        "NLTK unique lemmas count": len(nltk_unique),
+        "spaCy unique lemmas count": len(spacy_unique),
+        "Common lemmas count": len(common_lemmas),
+        "Total NLTK lemmas": len(nltk_lemmas),
+        "Total spaCy lemmas": len(spacy_lemmas),
     }
 
 
@@ -138,11 +138,9 @@ def compare_stemmings(nltk_stems, spacy_stems):
     common_stems = set(nltk_counter.keys()).intersection(set(spacy_counter.keys()))
 
     return {
-        'NLTK unique stems count': len(nltk_unique),
-        'spaCy unique stems count': len(spacy_unique),
-        'Common stems count': len(common_stems),
-        'Total NLTK stems': len(nltk_stems),
-        'Total spaCy stems': len(spacy_stems)
+        "NLTK unique stems count": len(nltk_unique),
+        "spaCy unique stems count": len(spacy_unique),
+        "Common stems count": len(common_stems),
+        "Total NLTK stems": len(nltk_stems),
+        "Total spaCy stems": len(spacy_stems),
     }
-
-# git remote add origin git@github-personal:RyanWri/afeka-nlp-homeworks.git
