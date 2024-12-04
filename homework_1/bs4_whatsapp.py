@@ -19,11 +19,11 @@ whatsapp_pattern = r"^\d{1,2}/\d{1,2}/\d{2}, \d{2}:\d{2} - .*?: (.*)"
 
 # A function to get the published date/time of the article either by tag <time> or from the text itself.
 def get_time(soup_cp):
-    date_tag = soup_cp.find('time')
+    date_tag = soup_cp.find("time")
     if date_tag:
         date = date_tag.text.strip()
     else:
-        paragraphs = soup_cp.find_all('p')
+        paragraphs = soup_cp.find_all("p")
         date = "Date not found"
         for para in paragraphs:
             if "Published:" in para.text:
@@ -39,7 +39,7 @@ def extract_messages_from_whatsapp_chat(file_path):
 
     chat_messages = []
     for line in chat_data:
-        if '<' in line or '>' in line:
+        if "<" in line or ">" in line:
             continue
         # Match the pattern for WhatsApp messages
         match = re.match(whatsapp_pattern, line)
@@ -62,18 +62,20 @@ article_text = ""
 # Check if the request was successful
 if response.status_code == 200:
     # Parse the HTML content
-    soup = BeautifulSoup(response.text, 'html.parser')
+    soup = BeautifulSoup(response.text, "html.parser")
 
     # Extract the article's title
-    title = soup.find('h1').text.strip()
+    title = soup.find("h1").text.strip()
     print("Title:", title)
 
     get_time(soup)
-    paragraphs = soup.find_all('p')
+    paragraphs = soup.find_all("p")
 
     # Extract all paragraphs in the article
     article_text = "\n".join([para.text.strip() for para in paragraphs])
-    print("Article Text (First 594 characters):", article_text[:594])  # I just didn't want the paragraph to be cut in the middle of the sentence.
+    print(
+        "Article Text (First 594 characters):", article_text[:594]
+    )  # I just didn't want the paragraph to be cut in the middle of the sentence.
 else:
     print(f"Failed to fetch the page. Status code: {response.status_code}")
 
@@ -125,8 +127,8 @@ if article_text:
         print(f"{key}: {value}")
 
     print("\n********** Task 8 **********")
-    messages = article_text.split('\n')  # Splits by newlines
-    messages = [line.strip() for line in messages if line.strip()] # Remove empty lines
+    messages = article_text.split("\n")  # Splits by newlines
+    messages = [line.strip() for line in messages if line.strip()]  # Remove empty lines
     result_message = find_message_with_stem_lemma_disparity(
         messages=messages, nltk_stems=nltk_stems, nltk_lemmas=nltk_lemmas
     )
@@ -153,7 +155,9 @@ if article_text:
     else:
         print("No message found that meets the criteria.")
 
-    extracted_whatsapp_messages = extract_messages_from_whatsapp_chat(whatsapp_file_path)
+    extracted_whatsapp_messages = extract_messages_from_whatsapp_chat(
+        whatsapp_file_path
+    )
 
     if len(extracted_whatsapp_messages) != 0:
         print("\n********** Task 5 **********")
@@ -204,7 +208,9 @@ if article_text:
 
         print("\n********** Task 8 **********")
         result_message = find_message_with_stem_lemma_disparity(
-            messages=extracted_whatsapp_messages, nltk_stems=nltk_stems, nltk_lemmas=nltk_lemmas
+            messages=extracted_whatsapp_messages,
+            nltk_stems=nltk_stems,
+            nltk_lemmas=nltk_lemmas,
         )
 
         if result_message:
@@ -218,7 +224,9 @@ if article_text:
         print("\n********** Task 9 **********")
         # Example usage
         result_message = find_message_with_lemma_stem_disparity(
-            messages=extracted_whatsapp_messages, nltk_stems=nltk_stems, nltk_lemmas=nltk_lemmas
+            messages=extracted_whatsapp_messages,
+            nltk_stems=nltk_stems,
+            nltk_lemmas=nltk_lemmas,
         )
 
         if result_message:
