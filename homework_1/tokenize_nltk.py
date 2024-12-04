@@ -3,6 +3,7 @@ import nltk
 
 # Ensure required NLTK data is downloaded
 nltk.download("punkt")
+nltk.download("punkt_tab")
 
 
 def tokenize_nltk(messages):
