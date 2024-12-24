@@ -7,7 +7,6 @@ from homework_2.word_2_vec import (
     train_fasttext_model,
     get_fasttext_embedding,
 )
-from homework_2.contextual import get_word_embedding
 
 file_path = "data/sentences.txt"
 sentences = read_sentences(file_path)
@@ -33,4 +32,4 @@ fasttext_model = train_fasttext_model(sentences, window_size=5)
 
 # Get FastText embeddings for a word (e.g., 'bank')
 fasttext_embedding = get_fasttext_embedding("bank", fasttext_model)
-print(f"FastText embedding for 'bank':\n", fasttext_embedding)
+print("FastText embedding for 'bank':\n", fasttext_embedding)
