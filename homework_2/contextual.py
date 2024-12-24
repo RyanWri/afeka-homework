@@ -11,7 +11,7 @@ def get_contextual_embedding(sentence, word, model, tokenizer):
     with torch.no_grad():
         outputs = model(**inputs)
 
-    # Get the word token index
+    # Tokenized sentence to find word's token indices
     tokenized_sentence = tokenizer.tokenize(sentence)
     word_tokens = tokenizer.tokenize(word)
 
@@ -27,21 +27,21 @@ def get_contextual_embedding(sentence, word, model, tokenizer):
     return word_embedding_avg
 
 
-def get_word_embedding():
+def get_word_embedding(sentence1, sentence2):
     # Initialize the tokenizer and model
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
     model = BertModel.from_pretrained("bert-base-uncased")
 
-    # Example sentences
-    sentence1 = "I went to the bank to withdraw money."
-    sentence2 = "The bank of the river was covered in grass."
-
-    # Get embeddings for "bank" in both contexts
-    embedding1 = get_contextual_embedding(sentence1, "bank", model, tokenizer)
-    embedding2 = get_contextual_embedding(sentence2, "bank", model, tokenizer)
-
-    # Display embeddings
-    print("Contextual embedding for 'bank' in financial context:", embedding1)
-    print("Contextual embedding for 'bank' in river context:", embedding2)
+    # Get embeddings for "lead" in both contexts
+    embedding1 = get_contextual_embedding(sentence1, "lead", model, tokenizer)
+    embedding2 = get_contextual_embedding(sentence2, "lead", model, tokenizer)
 
     return embedding1, embedding2
+
+
+def compute_cosine_similarity(vec1, vec2):
+    # Compute cosine similarity between two vectors
+    cos_sim = torch.nn.functional.cosine_similarity(
+        torch.tensor(vec1), torch.tensor(vec2), dim=0
+    )
+    return cos_sim.item()

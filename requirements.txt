@@ -9,3 +9,5 @@ torch
 jupyter
 gensim
 transformers
+datasets
+ollama
