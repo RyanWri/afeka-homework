@@ -1,20 +1,19 @@
-import torch
 from sklearn.metrics.pairwise import cosine_similarity
 from gensim.models import Word2Vec
 from ollama import chat
-from ollama import ChatResponse
 
 
 def generate_random_sentence_ollama(model, num_sentences, file_name):
     sentences = []
     for _ in range(num_sentences):
-        prompt = (
-            "Pick a random topic, then generate a valid sentence with proper grammar for it. "
-            "The sentence should hold 6 to 12 words with no special characters. "
-            "Each topic should be totally different from the previous one. "
-            "Your response should return only the sentence."
-        )
-        response: ChatResponse = chat(
+        prompt = """
+           Pick a random topic related to royalty, gender, or fruits, and generate a valid sentence 
+           with proper grammar. The sentence should include one of the following word pairs: 
+           "king" and "queen", "man" and "woman", or "apple" and "orange". 
+           The sentence should be between 6 to 12 words long with no special characters. 
+           Ensure that each sentence is unique and the topics are different from each other.
+           """
+        response = chat(
             model=model,
             messages=[
                 {
@@ -25,24 +24,15 @@ def generate_random_sentence_ollama(model, num_sentences, file_name):
         )
         sentences.append(response["message"]["content"].strip())
 
-    with open(file_name, "a") as file:
+    with open(file_name, "w") as file:
         # Add newline after each sentence to ensure proper formatting
         file.write("\n".join(sentences) + "\n")
 
     print(f"{num_sentences} random sentences generated and saved to {file_name}")
 
 
-generate_random_sentence_ollama(
-    model="mistral", num_sentences=5, file_name="data/custom_corpus.txt"
-)
-
-
-# Load the trained Word2Vec model
-model = Word2Vec.load("word2vec_custom.model")
-
-
 # Function to get the word embedding
-def get_word_embedding(word):
+def get_word_embedding(model, word):
     try:
         return model.wv[word]
     except KeyError:
@@ -50,16 +40,11 @@ def get_word_embedding(word):
         return None
 
 
-# Word pairs for evaluation
-word_pairs = [("king", "queen"), ("man", "woman"), ("apple", "orange")]
-
-
-# Function to calculate cosine similarity for word pairs
-def evaluate_word_pairs(word_pairs):
+def evaluate_word_pairs(model, word_pairs):
     # Calculate cosine similarity for each word pair
     for word1, word2 in word_pairs:
-        vec1 = get_word_embedding(word1)
-        vec2 = get_word_embedding(word2)
+        vec1 = get_word_embedding(model, word1)
+        vec2 = get_word_embedding(model, word2)
         if vec1 is not None and vec2 is not None:
             similarity = cosine_similarity([vec1], [vec2])[0][0]
             print(
@@ -67,5 +52,17 @@ def evaluate_word_pairs(word_pairs):
             )
 
 
-# Evaluate the word pairs
-evaluate_word_pairs(word_pairs)
+if __name__ == "__main__":
+    # Generate random sentences and save them to a file
+    generate_random_sentence_ollama(
+        model="mistral", num_sentences=30, file_name="data/custom_corpus.txt"
+    )
+
+    # Load the trained Word2Vec model (ensure the model has been trained and saved)
+    model = Word2Vec.load("word2vec_custom.model")
+
+    # Word pairs for evaluation
+    word_pairs = [("king", "queen"), ("man", "woman"), ("apple", "orange")]
+
+    # Evaluate the word pairs
+    evaluate_word_pairs(model, word_pairs)

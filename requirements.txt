@@ -11,3 +11,4 @@ gensim
 transformers
 datasets
 ollama
+asyncio

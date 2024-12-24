@@ -1,5 +1,5 @@
 import numpy as np
-from gensim.models import FastText, Word2Vec
+from gensim.models import Word2Vec
 
 
 def train_skipgram_model(corpus, vector_size, window, min_count):
