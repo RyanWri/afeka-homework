@@ -7,3 +7,5 @@ spacy
 ruff
 torch
 jupyter
+gensim
+transformers
