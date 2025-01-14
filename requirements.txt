@@ -2,14 +2,14 @@ scikit-learn
 nltk
 numpy
 pandas
-nltk
 spacy
 ruff
 torch
-jupyter
 gensim
 transformers
 datasets
 ollama
 asyncio
 matplotlib
+ipykernel
+seaborn
