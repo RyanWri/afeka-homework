@@ -1,8 +1,15 @@
-from collections import defaultdict
 import random
+from collections import defaultdict
 
 
-# Helper functions for Monte Carlo
+# Monte Carlo utilities
+def random_policy_factory(action_space):
+    def policy(state):
+        return random.choice(action_space)
+
+    return policy
+
+
 def generate_episode(env, policy, max_steps=100):
     episode = []
     state = env.reset()
@@ -16,7 +23,7 @@ def generate_episode(env, policy, max_steps=100):
     return episode
 
 
-def monte_carlo_prediction(env, policy, num_episodes=5000, gamma=0.99):
+def monte_carlo_prediction(env, policy, num_episodes=100, gamma=0.99):
     returns_sum = defaultdict(float)
     returns_count = defaultdict(int)
     V = {}
@@ -34,7 +41,3 @@ def monte_carlo_prediction(env, policy, num_episodes=5000, gamma=0.99):
     for s in returns_sum:
         V[s] = returns_sum[s] / returns_count[s]
     return V
-
-
-def random_policy(state):
-    return random.choice([0, 1, 2, 3])  # uniform random action
