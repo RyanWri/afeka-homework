@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from collections import defaultdict
+from dataclasses import dataclass
 import time
 
 
@@ -21,6 +21,18 @@ class RLConfig:
         self.epsilon = epsilon
         self.episodes = episodes
         self.max_steps = max_steps
+
+
+@dataclass
+class RLResult:
+    name: str  # e.g. "Value Iteration"
+    time_seconds: float  # total runtime
+    iterations: int  # DP sweeps or episodes run
+    value_function: dict  # V(s)
+    q_function: dict = None  # optional Q(s,a)
+    policy: dict = None  # derived policy π(s)
+    rewards_per_episode: list = None  # for learning curves
+    notes: str = ""  # any extra context
 
 
 def record_episode_metrics(env, policy_fn, config):
