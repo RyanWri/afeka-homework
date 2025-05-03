@@ -1,4 +1,4 @@
-def value_iteration(states, actions, P, gamma=0.99, theta=1e-4, max_iterations=1000):
+def value_iteration(states, actions, P, gamma, theta, max_iterations=1000):
     V = {s: 0.0 for s in states}
     for i in range(1, max_iterations + 1):
         delta = 0
